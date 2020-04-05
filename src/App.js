@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react"
 
-function App() {
+const App = () => {
+  const [pokemon, setPokemon] = useState(null)
+
+  useEffect(() => {
+    setBulbasaur()
+  }, [])
+
+  const setBulbasaur = async () => {
+    const bulbasaur = await fetch(
+      "https://pokeapi.co/api/v2/pokemon/bulbasaur"
+    ).then(response => response.json())
+
+    setPokemon(bulbasaur.name)
+  }
+
+  const setCharmander = async () => {
+    const charmander = await fetch(
+      "https://pokeapi.co/api/v2/pokemon/charmander"
+    ).then(response => response.json())
+
+    setPokemon(charmander.name)
+  }
+
+  if (!pokemon) return null
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  <div>
+    <h1>{ pokemon }</h1>
+    <button onClick={ setCharmander }>Choose charmander!</button>
+  </div>
+  )
 }
 
-export default App;
+export { App }
